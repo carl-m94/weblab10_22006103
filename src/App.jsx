@@ -14,7 +14,10 @@ function TaskInput(props) {
       <br />
       <Button
         variant="primary"
-        onClick={() => props.addTask(document.getElementById('input').value)}
+        onClick={() => {
+          props.addTask(document.getElementById('input').value);
+          document.getElementById('input').value = "";
+        }}
       >
         Add Task
       </Button>
@@ -36,7 +39,7 @@ function TaskList(props) {
         }}
       >
         <span>{name}</span>
-        <Button variant="danger" onClick={() => props.deleteTask({ index })}>
+        <Button variant="danger" onClick={ () => {props.deleteTask({ index }) ;}}>
           Delete
         </Button>
       </ListGroup.Item>
@@ -100,7 +103,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Mini Task Dashboard</h1>
+        <h1>Complete Task Dashboard</h1>
         <div style={{ display: 'inline-block' }}>
           <TaskInput addTask={this.addTasks} />
           <br />
