@@ -10,7 +10,7 @@ function TaskInput(props) {
   /* This Component receives the method addTask in props to then send as param the value of Form.Control which is our input*/
   return (
     <>
-      <Form.Control type="text" placeholder="Type your task" id="input" />
+      <Form.Control type="text" placeholder="Type your task" id="input"/>
       <br />
       <Button
         variant="primary"
@@ -63,11 +63,14 @@ class App extends React.Component {
 
   //We add a nex task to our Tasks array in state
   addTasks(TaskToAdd) {
-    this.setState(
-      { Tasks: [...this.state.Tasks, TaskToAdd],
-        count: this.state.count + 1
-      }
-    );
+    if(TaskToAdd != ""){
+      this.setState(
+        { 
+          Tasks: [...this.state.Tasks, TaskToAdd],
+          count: this.state.count + 1
+        }
+      );
+    }
   }
 
   deleteTasks(taskIndex) {
