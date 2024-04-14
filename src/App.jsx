@@ -40,6 +40,7 @@ function TaskList(props) {
           Delete
         </Button>
       </ListGroup.Item>
+
     );
   });
 }
@@ -51,6 +52,7 @@ class App extends React.Component {
     //Initialization of the state
     this.state = {
       Tasks: [],
+      count: 0,
     };
 
     //The method this.setState wasn't working, and I don't feel like that makes any sense but who am I to judge this thing?. Anyway, I searched on Google for the solution and this appeared: bind() sends data as an argument to the function. In other words, I'm sending the data from the App class to the method so it can recognize the state, which is kinda strange considering that the function is literally inside the App class. But if it's working, I ain't touching that, I prefer to let it be.
@@ -61,7 +63,11 @@ class App extends React.Component {
 
   //We add a nex task to our Tasks array in state
   addTasks(TaskToAdd) {
-    this.setState({ Tasks: [...this.state.Tasks, TaskToAdd] });
+    this.setState(
+      { Tasks: [...this.state.Tasks, TaskToAdd],
+        count: this.state.count + 1
+      }
+    );
   }
 
   deleteTasks(taskIndex) {
@@ -72,7 +78,20 @@ class App extends React.Component {
     updatedTasks.splice(taskIndex.index, 1);
 
     //We use the setState method to change our Tasks array to a new one that doesn't have the deleted index
-    this.setState({ Tasks: updatedTasks });
+    this.setState(
+      { Tasks: updatedTasks,  
+        count: this.state.count - 1
+      }
+    );
+  }
+
+  deleteAllTasks(){
+    this.setState(
+      {
+        Tasks: [],
+        count: 0
+      }
+    )
   }
 
   render() {
@@ -83,9 +102,12 @@ class App extends React.Component {
           <TaskInput addTask={this.addTasks} />
           <br />
           <br />
+          <h4>{this.state.count} pending tasks</h4>
           <ListGroup>
             <TaskList Tasks={this.state.Tasks} deleteTask={this.deleteTasks} />
           </ListGroup>
+          <br />
+          <Button variant="danger" onClick={() => this.deleteAllTasks()}>Delete All</Button>
         </div>
       </div>
     );
